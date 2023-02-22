@@ -15,4 +15,5 @@ function connect() {
 
 module.exports = {
     connect,
+    user
 };
