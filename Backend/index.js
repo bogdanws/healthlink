@@ -1,14 +1,13 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const app = express();
 
-mongoose.connect('mongodb://127.0.0.1:27017/healthlink', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Connected to MongoDB...'))
+const db = require('./util/db');
+db.connect();
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
 app.listen(3000, () => {
-    console.log('Listening on port 3000!');
+    console.log('Listening on port 3000 at http://localhost:3000');
 });
