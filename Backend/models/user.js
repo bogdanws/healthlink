@@ -2,14 +2,43 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 let Schema = mongoose.Schema;
 
-let userSchema = new Schema({
-    firstName: { // first name of the user
-        type: String,
-        required: true
+/* 
+User: {
+    info: {
+        firstName: String,
+        lastName: String,
+        birthDate: Date,
+        address: String,
+        gender: String,
     },
-    lastName: { // last name of the user
-        type: String,
-        required: true
+    email: String,
+    phone: String,
+    password: String,
+    role: String,
+    profile: ref to Medic or Patient,
+}
+ */
+
+let userSchema = new Schema({
+    info: { // info of the user
+        firstName: { // first name of the user
+            type: String,
+            required: true
+        },
+        lastName: { // last name of the user
+            type: String,
+            required: true
+        },
+        birthDate: { // birth date of the user
+            type: Date,
+            required: false,
+            default: null
+        },
+        address: { // address of the user
+            type: String,
+            required: false,
+            default: null,
+        },
     },
     email: { // email of the user
         type: String,
@@ -30,16 +59,10 @@ let userSchema = new Schema({
         enum: ['medic', 'patient', 'admin'],
         default: 'patient'
     },
-    image: { // optional avatar image of the user
-        type: Buffer,
-        required: false,
-        // default: undefined,
-        contentType: String
-    },
-    inviteCode: { // optional invite code of the user, used for patient registration
-        type: String,
-        required: false,
-        default: null
+    profile: { // profile of the user
+        type: Schema.Types.ObjectId,
+        ref: 'Medic' || 'Patient',
+        required: true,
     },
 });
 
@@ -52,9 +75,9 @@ userSchema.methods.toJSON = function () {
 };
 
 // find by email/phone/inviteCode and password
-userSchema.statics.findByCredentials = function (email, phone, inviteCode, password) {
+userSchema.statics.findByCredentials = function (email, phone, password) {
     let User = this;
-    return User.findOne({ $or: [{ email }, { phone }, { inviteCode }] }).then((user) => {
+    return User.findOne({ $or: [{ email }, { phone }] }).then((user) => {
         if (!user) {
             return Promise.reject();
         }

@@ -4,10 +4,35 @@ const router = express.Router();
 const db = require('../util/db');
 const User = db.user;
 
-// POST /user/add
+// POST /user
 // Add a new user
-router.post('/add', (req, res) => {
-    let user = new User(req.body);
+/* 
+example body:
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "birthDate": "1990-01-01",
+    "address": "1234 Main St",
+    "email": "example@example.com",
+    "phone": "1234567890",
+    "password": "password",
+    "role": "medic"
+}
+*/
+router.post('/', (req, res) => {
+    let user = new User({
+        info: {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            birthDate: req.body.birthDate,
+            address: req.body.address,
+        },
+        email: req.body.email,
+        phone: req.body.phone,
+        password: req.body.password,
+        role: req.body.role,
+        profile: null
+    });
     user.save().then((user) => {
         res.send(user.toJSON());
     }).catch((err) => {
