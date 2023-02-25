@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const user = require('./routes/user');
 app.use('/user', user);
+const doctor = require('./routes/doctor');
+app.use('/doctor', doctor);
 
 app.listen(3000, () => {
     console.log('Listening on port 3000 at http://127.0.0.1:3000');
