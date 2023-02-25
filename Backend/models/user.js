@@ -56,13 +56,14 @@ let userSchema = new Schema({
     role: { // role of the user
         type: String,
         required: true,
-        enum: ['medic', 'patient', 'admin'],
+        enum: ['doctor', 'patient'],
         default: 'patient'
     },
     profile: { // profile of the user
         type: Schema.Types.ObjectId,
-        ref: 'Medic' || 'Patient',
-        required: true,
+        ref: 'Doctor' || 'Patient',
+        required: false,
+        default: null
     },
 });
 

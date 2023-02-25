@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const user = require('../models/user');
+const patient = require('../models/patient');
+const doctor = require('../models/doctor');
+const appointment = require('../models/appointment');
+const document = require('../models/document');
 
 function connect() {
     mongoose.set('strictQuery', false);
@@ -15,5 +19,9 @@ function connect() {
 
 module.exports = {
     connect,
-    user
+    user,
+    patient,
+    doctor,
+    appointment,
+    document
 };
