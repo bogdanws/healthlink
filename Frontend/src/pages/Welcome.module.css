@@ -1,0 +1,94 @@
+.container {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #ffffff 50%, #d3d3d3 100%);
+}
+
+.header {
+    width: 95%;
+    margin: 10px;
+    padding: 4em 10px 0 10px;
+
+    background: linear-gradient(180deg, #901970 0%, #250a25 100%);
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header img {
+    width: 100%;
+}
+
+
+.body {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.title {
+    width: 95%;
+    margin: 10px;
+    padding: 0 10px 0 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #250a25;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.title h2 {
+    font-size: 1.5em;
+    font-weight: 400;
+    color: #250a25;
+    margin: 0;
+
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+
+    background-color: #250a25;
+    border-radius: 10px;
+    overflow: hidden;
+
+    width: 90%;
+}
+
+button {
+    width: 50%;
+    padding: 20px 10px;
+    border: none;
+    color: #f7f7f7;
+    font-size: 1.5em;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+}
+
+.signup {
+    background-color: #901970;
+    border-radius: 0 10px 10px 0;
+}
+
+.login {
+    background-color: #381038;
+}
