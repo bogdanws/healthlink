@@ -1,0 +1,120 @@
+.container {
+	min-height: 100dvh;
+	position: relative;
+}
+
+.header {
+	position: relative;
+
+	.headerPhoto {
+		max-height: 60dvh;
+		width: 100dvw;
+	}
+}
+
+.logoContainer {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: flex;
+	align-items: center;
+	padding: 0.5em;
+
+	.logoText {
+		font-size: 1.7em;
+		margin: 0;
+	}
+
+	.logoImg {}
+}
+
+.title {
+	width: 95%;
+	margin-top: 30px;
+	padding: 0 10px 0 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+
+	padding-bottom: 10em;
+
+	h1 {
+		color: #050324;
+		font-weight: normal;
+		margin: 0;
+		font-size: 3em;
+	}
+
+	h2 {
+		color: #050324;
+		font-weight: normal;
+		font-size: 1.6em;
+	}
+}
+
+.fullWidth {
+	position: absolute;
+	bottom: min(10%, 80px);
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.buttonContainer {
+	background-color: #27255c;
+
+	border-radius: 10px;
+	overflow: hidden; // to round the corners
+
+	width: 90%;
+
+	button {
+		width: 50%;
+		padding: 20px 10px;
+
+		border: none;
+		color: white;
+
+		font-size: 1.7em;
+		font-weight: normal;
+		text-align: center;
+
+		cursor: pointer;
+
+		&.signup {
+			background-color: #050324;
+			border-radius: 0 10px 10px 0;
+		}
+
+		&.login {
+			background-color: #27255c;
+		}
+	}
+}
+
+.triangleContainer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+
+	.triangle {
+		width: 0;
+		height: 0;
+		position: absolute;
+		bottom: 0;
+		z-index: -1;
+
+		&:nth-of-type(1) {
+			border-bottom: 230px solid #c7e5fc;
+			border-left: 100dvw solid transparent;
+		}
+
+		&:nth-of-type(2) {
+			border-bottom: 230px solid #9ca6ce;
+			border-right: 100dvw solid transparent;
+		}
+	}
+}

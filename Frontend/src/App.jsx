@@ -1,19 +1,29 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import {
+	createBrowserRouter,
+	createRoutesFromElements,
+	Route,
+	RouterProvider
+} from "react-router-dom";
 
-import Welcome from "./pages/Welcome"
+import Welcome from "./pages/Welcome";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
-const router = createBrowserRouter([
-  { path: "/", element: <Welcome /> },
-]);
-
+const routeDefinitions = createRoutesFromElements(
+	<Route path="/">
+		<Route path="" element={<Welcome />} />
+		<Route path="login" element={<Login />} />
+		<Route path="signup" element={<Signup />} />
+	</Route>
+);
 
 function App() {
-  return (
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
-  )
+	return (
+		<React.StrictMode>
+			<RouterProvider router={createBrowserRouter(routeDefinitions)} />
+		</React.StrictMode>
+	);
 }
 
-export default App
+export default App;
