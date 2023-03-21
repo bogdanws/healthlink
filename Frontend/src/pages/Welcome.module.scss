@@ -1,3 +1,5 @@
+@import "../globals.scss";
+
 .container {
 	min-height: 100dvh;
 	position: relative;
@@ -9,6 +11,9 @@
 	.headerPhoto {
 		max-height: 60dvh;
 		width: 100dvw;
+
+		object-fit: contain;
+		object-position: left;
 	}
 }
 
@@ -29,14 +34,18 @@
 }
 
 .title {
+	z-index: 10;
+
 	width: 95%;
+
+	padding-bottom: 10em;
 	margin-top: 30px;
 	padding: 0 10px 0 15px;
+
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 
-	padding-bottom: 10em;
 
 	h1 {
 		color: #050324;
@@ -52,7 +61,7 @@
 	}
 }
 
-.fullWidth {
+.buttonPositioning {
 	position: absolute;
 	bottom: min(10%, 80px);
 	width: 100%;
@@ -61,39 +70,56 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
 
-.buttonContainer {
-	background-color: #27255c;
+	.buttonContainer {
+		background-color: #27255c;
 
-	border-radius: 10px;
-	overflow: hidden; // to round the corners
+		border-radius: 10px;
+		overflow: hidden; // to round the corners
 
-	width: 90%;
+		width: 90%;
 
-	button {
-		width: 50%;
-		padding: 20px 10px;
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+		transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
-		border: none;
-		color: white;
-
-		font-size: 1.7em;
-		font-weight: normal;
-		text-align: center;
-
-		cursor: pointer;
-
-		&.signup {
-			background-color: #050324;
-			border-radius: 0 10px 10px 0;
+		&:hover {
+			transform: scale(1.02);
+			box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.3);
 		}
 
-		&.login {
-			background-color: #27255c;
+		button {
+			width: 50%;
+			padding: 20px 10px;
+
+			border: none;
+			color: white;
+
+			font-size: 1.7em;
+			font-weight: normal;
+			text-align: center;
+
+			cursor: pointer;
+
+			&.signup {
+				background-color: #050324;
+				border-radius: 0 10px 10px 0;
+
+				&:hover {
+					background-color: #030118;
+				}
+			}
+
+			&.login {
+				background-color: #27255c;
+
+				&:hover {
+					background-color: #1f1d52;
+				}
+			}
 		}
 	}
 }
+
 
 .triangleContainer {
 	position: absolute;
@@ -116,5 +142,89 @@
 			border-bottom: 230px solid #9ca6ce;
 			border-right: 100dvw solid transparent;
 		}
+	}
+}
+
+@media (min-width: $breakpoint) {
+	.container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		background: linear-gradient(to right top, #81ACF8, #2528A1);
+	}
+
+	.containerLg {
+		position: relative;
+		overflow: hidden;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+
+		width: 80%;
+		height: 80vh;
+
+		background-color: white;
+		border-radius: 10px;
+		box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
+	}
+
+	.header {
+		z-index: 1;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+
+		.headerPhoto {
+			width: 52vw;
+			height: 100%;
+			max-height: 100%;
+
+			object-fit: contain;
+			object-position: right top;
+
+			z-index: -1;
+		}
+	}
+
+	.title {
+		max-width: 35%;
+		padding-left: 3em;
+		padding-bottom: 10vh;
+
+		h1 {
+			font-size: 5rem;
+			padding-bottom: 3vh;
+		}
+
+		h2 {
+			margin-top: 0;
+			font-size: 2rem;
+		}
+	}
+
+	.buttonPositioning {
+		z-index: 11;
+		width: 30%;
+		min-width: 350px;
+		margin-left: 50px;
+		padding-bottom: 5vh;
+	}
+
+	.leaves {
+		z-index: 2;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+
+		max-height: 70vh;
+		width: 50vw;
+
+
+		object-fit: contain;
+		object-position: bottom right;
 	}
 }
