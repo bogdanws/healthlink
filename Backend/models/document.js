@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
 /*
@@ -12,29 +12,29 @@ Document: {
 */
 
 let documentSchema = new Schema({
-    patient: {
-        type: Schema.Types.ObjectId,
-        ref: 'Patient',
-        required: true
-    },
-    date: {
-        type: Date,
-        required: true
-    },
-    description: {
-        type: String,
-        required: false,
-        default: null
-    },
-    type: {
-        type: String,
-        required: true,
-        enum: ['pdf', 'image', 'text', 'other']
-    },
-    data: {
-        type: String,
-        required: true
-    }
+	patient: {
+		type: Schema.Types.ObjectId,
+		ref: "Patient",
+		required: true,
+	},
+	date: {
+		type: Date,
+		required: true,
+	},
+	description: {
+		type: String,
+		required: false,
+		default: null,
+	},
+	type: {
+		type: String,
+		required: true,
+		enum: ["pdf", "image", "text", "other"],
+	},
+	data: {
+		type: String,
+		required: true,
+	},
 });
 
-module.exports = mongoose.model('Document', documentSchema);
+module.exports = mongoose.model("Document", documentSchema);

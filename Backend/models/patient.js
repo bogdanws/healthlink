@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
 /* 
@@ -10,30 +10,33 @@ Patient: {
 */
 
 let patientSchema = new Schema({
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-        unique: true
-    },
-    doctor: {
-        type: Schema.Types.ObjectId,
-        ref: 'Doctor',
-        required: true
-    },
-    documents: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Document',
-        required: false,
-        default: []
-    }],
-    appointments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Appointment',
-        required: false,
-        default: []
-    }]
+	user: {
+		type: Schema.Types.ObjectId,
+		ref: "User",
+		required: true,
+		unique: true,
+	},
+	doctor: {
+		type: Schema.Types.ObjectId,
+		ref: "Doctor",
+		required: true,
+	},
+	documents: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "Document",
+			required: false,
+			default: [],
+		},
+	],
+	appointments: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "Appointment",
+			required: false,
+			default: [],
+		},
+	],
 });
 
-
-module.exports = mongoose.model('Patient', patientSchema);
+module.exports = mongoose.model("Patient", patientSchema);
