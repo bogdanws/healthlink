@@ -1,0 +1,134 @@
+@import "../globals.scss";
+
+.container {
+	min-height: 100dvh;
+	position: relative;
+	z-index: 10;
+}
+
+.triangle {
+	position: absolute;
+	top: 0;
+	border-top: 200px solid #c7e5fc;
+	border-right: 100dvw solid transparent;
+}
+
+.title h1 {
+	color: #050324;
+	font-weight: normal;
+	margin: 0;
+	font-size: 3em;
+
+	padding-left: 0.5em;
+}
+.topContainer {
+	display: flex;
+	justify-content: space-between;
+	svg {
+		color: #050324;
+
+		height: 3.5em;
+		width: 3.5em;
+		padding: 0.5em;
+	}
+	.logoContainer {
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: flex;
+		align-items: center;
+		padding: 0.5em;
+
+		.logoText {
+			font-size: 1.7em;
+			margin: 0;
+		}
+
+		.logoImg {
+		}
+	}
+}
+
+.header {
+	position: relative;
+
+	.headerPhoto {
+		max-height: 60dvh;
+		width: 100dvw;
+		padding-top: 3vh;
+		padding-bottom: 10vh;
+		object-fit: contain;
+		object-position: center;
+	}
+}
+
+.form {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+
+	width: 100%;
+	padding: 0 10%;
+
+	div {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		width: 100%;
+		padding-bottom: 0.5em;
+	}
+
+	label {
+		color: #050324;
+		font-weight: normal;
+		font-size: 1.3em;
+	}
+	input {
+		border-radius: 10px;
+		border: none;
+		background-color: #d9d9d9;
+		height: 3em;
+		width: 100%;
+	}
+
+	button {
+		margin-top: 1em;
+		padding: 10px 10px;
+		border-radius: 10px;
+
+		color: white;
+		background-color: #050324;
+
+		font-size: 1.3em;
+		font-weight: normal;
+		text-align: center;
+
+		cursor: pointer;
+	}
+}
+
+@media (min-width: $breakpoint) {
+	.title {
+		padding: 1em;
+	}
+
+	.containerLg {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+
+		.header {
+			.headerPhoto {
+				width: auto;
+				height: 60dvh;
+				padding: 0;
+			}
+		}
+
+		.form {
+			width: 30vw;
+			padding: 0;
+		}
+	}
+}
