@@ -37,14 +37,10 @@ export default function Welcome() {
 				<div className={styles.buttonPositioning}>
 					<div className={styles.buttonContainer}>
 						<Link to="signup">
-							<button className={`${styles.button} ${styles.signup}`}>
-								Sign up
-							</button>
+							<button className={styles.signup}>Sign up</button>
 						</Link>
 						<Link to="login">
-							<button className={`${styles.button} ${styles.login}`}>
-								Sign in
-							</button>
+							<button className={styles.login}>Sign in</button>
 						</Link>
 					</div>
 				</div>
