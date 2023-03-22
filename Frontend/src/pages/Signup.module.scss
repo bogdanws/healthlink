@@ -1,0 +1,66 @@
+@import "../globals.scss";
+.container {
+	min-height: 100dvh;
+	position: relative;
+	z-index: 10;
+}
+
+.triangle {
+	position: absolute;
+	top: 0;
+	border-top: 200px solid #c7e5fc;
+	border-right: 100dvw solid transparent;
+}
+
+.title h1 {
+	color: #050324;
+	font-weight: normal;
+	margin: 0;
+	font-size: 3em;
+
+	padding-left: 0.5em;
+}
+.topContainer {
+	display: flex;
+	justify-content: space-between;
+	svg {
+		height: 3.5em;
+		width: 3.5em;
+		padding: 0.5em;
+	}
+	.logoContainer {
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: flex;
+		align-items: center;
+		padding: 0.5em;
+
+		.logoText {
+			font-size: 1.7em;
+			margin: 0;
+		}
+	}
+}
+
+.formContainer {
+	background-color: #9ca6ce;
+	.form {
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		width: 90%;
+
+		label {
+			color: #050324;
+			font-weight: normal;
+			font-size: 1.6em;
+		}
+		input {
+			border: none;
+			background-color: #d9d9d9;
+			height: 3em;
+		}
+	}
+}
