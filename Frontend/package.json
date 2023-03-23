@@ -11,7 +11,8 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@mui/material": "^5.11.13",
+    "@mui/material": "^5.11.14",
+    "@mui/x-date-pickers": "^6.0.2",
     "dayjs": "^1.11.7",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.5",

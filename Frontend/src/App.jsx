@@ -5,6 +5,9 @@ import {
 	Route,
 	RouterProvider
 } from "react-router-dom";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
@@ -18,10 +21,27 @@ const routeDefinitions = createRoutesFromElements(
 	</Route>
 );
 
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: "#27255C",
+			light: "#2528A1",
+			dark: "#050324"
+		},
+		secondary: {
+			main: "#f77f00"
+		}
+	}
+});
+
 function App() {
 	return (
 		<React.StrictMode>
-			<RouterProvider router={createBrowserRouter(routeDefinitions)} />
+			<ThemeProvider theme={theme}>
+				<LocalizationProvider dateAdapter={AdapterDayjs}>
+					<RouterProvider router={createBrowserRouter(routeDefinitions)} />
+				</LocalizationProvider>
+			</ThemeProvider>
 		</React.StrictMode>
 	);
 }

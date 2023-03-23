@@ -70,27 +70,27 @@
 	width: 100%;
 	padding: 0 10%;
 
-	div {
+	/* 	div {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 
 		width: 100%;
 		padding-bottom: 0.5em;
-	}
+	} */
 
-	label {
+	/* 	label {
 		color: #050324;
 		font-weight: normal;
 		font-size: 1.3em;
-	}
-	input {
+	} */
+	/* 	input {
 		border-radius: 10px;
 		border: none;
 		background-color: #d9d9d9;
 		height: 3em;
 		width: 100%;
-	}
+	} */
 
 	button {
 		margin-top: 1em;
@@ -99,12 +99,20 @@
 
 		color: white;
 		background-color: #050324;
+		border: none;
 
 		font-size: 1.3em;
 		font-weight: normal;
 		text-align: center;
 
 		cursor: pointer;
+
+		// box-shadow: 0 0 0.5rem #05032400;
+		// transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+		// &:hover {
+		// 	transform: scale(1.02);
+		// 	box-shadow: 0 0 0.75rem #05032454;
+		// }
 	}
 }
 
@@ -121,6 +129,7 @@
 		.header {
 			.headerPhoto {
 				width: auto;
+				max-width: 50vw;
 				height: 60dvh;
 				padding: 0;
 			}
@@ -129,6 +138,27 @@
 		.form {
 			width: 30vw;
 			padding: 0;
+
+			.loginTitle {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+
+				margin-bottom: 1em;
+
+				h2 {
+					margin-top: 1em;
+					font-size: 1.2em;
+					font-weight: 600;
+					color: #3c4257;
+				}
+				img {
+					height: 4em;
+					width: 4em;
+					filter: drop-shadow(0 0 0.5rem #05032454);
+				}
+			}
 		}
 	}
 }
