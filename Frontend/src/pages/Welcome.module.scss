@@ -3,6 +3,21 @@
 .container {
 	min-height: 100dvh;
 	position: relative;
+
+	@media (max-width: $breakpoint) {
+		display: flex;
+		flex-direction: column;
+
+		.containerLg {
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+
+			.buttonPositioning {
+				margin: auto;
+			}
+		}
+	}
 }
 
 .header {
@@ -62,8 +77,8 @@
 }
 
 .buttonPositioning {
-	position: absolute;
-	bottom: min(10%, 80px);
+	// position: absolute;
+	// bottom: min(10%, 80px);
 	width: 100%;
 
 	display: flex;

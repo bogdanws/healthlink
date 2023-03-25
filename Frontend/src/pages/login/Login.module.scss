@@ -1,9 +1,21 @@
-@import "../globals.scss";
+@import "../../globals.scss";
 
 .container {
-	min-height: 100dvh;
+	min-height: 100svh;
 	position: relative;
 	z-index: 10;
+
+	display: flex;
+	flex-direction: column;
+
+	.containerLg {
+		flex-grow: 1;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		align-items: center;
+	}
 }
 
 .triangle {
@@ -55,8 +67,8 @@
 	.headerPhoto {
 		max-height: 60dvh;
 		width: 100dvw;
-		padding-top: 3vh;
-		padding-bottom: 10vh;
+		// padding-top: 3vh;
+		// padding-bottom: 10vh;
 		object-fit: contain;
 		object-position: center;
 	}
@@ -121,10 +133,14 @@
 		padding: 1em;
 	}
 
-	.containerLg {
+	.container .containerLg {
 		display: flex;
+		flex-direction: row;
 		justify-content: space-around;
 		align-items: center;
+
+		position: relative;
+		top: -10vh;
 
 		.header {
 			.headerPhoto {
@@ -144,6 +160,8 @@
 				justify-content: center;
 				align-items: center;
 				flex-direction: column;
+
+				text-align: center;
 
 				margin-bottom: 1em;
 
