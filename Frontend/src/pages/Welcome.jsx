@@ -1,9 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Welcome.module.scss";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import axios from "axios";
+import { useEffect } from "react";
 
 export default function Welcome() {
 	const desktop = useMediaQuery("(min-width:768px)");
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		function checkLogin() {
+			// stop axios from throwing an error if the user is not logged in
+			axios.defaults.validateStatus = (status) => {
+				return status < 500;
+			};
+			axios
+				.get("/api/login", { withCredentials: true })
+				.then((res) => {
+					if (res.status === 200) {
+						navigate("/dashboard");
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+		checkLogin();
+	}, []);
 
 	return (
 		<div className={styles.container}>

@@ -21,7 +21,7 @@
 .triangle {
 	position: absolute;
 	top: 0;
-	border-top: 200px solid #c7e5fc;
+	border-top: 300px solid #c7e5fc;
 	border-right: 100dvw solid transparent;
 }
 
@@ -29,10 +29,11 @@
 	color: #050324;
 	font-weight: normal;
 	margin: 0;
-	font-size: 3em;
+	font-size: 4em;
 
 	padding-left: 0.5em;
 }
+
 .topContainer {
 	display: flex;
 	justify-content: space-between;
@@ -67,8 +68,7 @@
 	.headerPhoto {
 		max-height: 60dvh;
 		width: 100dvw;
-		// padding-top: 3vh;
-		// padding-bottom: 10vh;
+
 		object-fit: contain;
 		object-position: center;
 	}

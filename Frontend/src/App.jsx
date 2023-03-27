@@ -8,17 +8,25 @@ import {
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { store } from "./store";
+import { Provider } from "react-redux";
 
 import Welcome from "./pages/Welcome";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Login from "./pages/login";
+import Signup from "./pages/signup";
+import Dashboard from "./pages/dashboard";
 
 const routeDefinitions = createRoutesFromElements(
-	<Route path="/">
-		<Route path="" element={<Welcome />} />
-		<Route path="login" element={<Login />} />
-		<Route path="signup" element={<Signup />} />
-	</Route>
+	<>
+		<Route path="/">
+			<Route path="" element={<Welcome />} />
+			<Route path="login" element={<Login />} />
+			<Route path="signup" element={<Signup />} />
+		</Route>
+		<Route path="/dashboard" element={<Dashboard />}>
+			<Route path="" />
+		</Route>
+	</>
 );
 
 const theme = createTheme({
@@ -37,11 +45,13 @@ const theme = createTheme({
 function App() {
 	return (
 		<React.StrictMode>
-			<ThemeProvider theme={theme}>
-				<LocalizationProvider dateAdapter={AdapterDayjs}>
-					<RouterProvider router={createBrowserRouter(routeDefinitions)} />
-				</LocalizationProvider>
-			</ThemeProvider>
+			<Provider store={store}>
+				<ThemeProvider theme={theme}>
+					<LocalizationProvider dateAdapter={AdapterDayjs}>
+						<RouterProvider router={createBrowserRouter(routeDefinitions)} />
+					</LocalizationProvider>
+				</ThemeProvider>
+			</Provider>
 		</React.StrictMode>
 	);
 }

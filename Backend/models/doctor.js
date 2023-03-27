@@ -1,24 +1,31 @@
+const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
 /*
 Doctor: {
-    user: User,
-    patients: [Patient],
-    appointments: [Appointment],
-    info: {
-        address: String,
-        phone: String,
-        picture: String,
-        description: String
-    },
-    timetable: {[
-        day: Number (0-6),
-        startingHour: Number (0-23),
-        startingMinutes: Number (0-59),
-        endingHour: Number (0-23),
-        endingMinutes: Number (0-59)
-    ]}
+	firstName: String,
+	lastName: String,
+	birthDate: Date,
+	email: String,
+	phone: String,
+	password: String,
+	patients: [Patient],
+	appointments: [Appointment],
+	info: {
+		address: String,
+		phone: String,
+		picture: String,
+		description: String,
+		// TODO: Medical license
+	},
+	timetable: {[
+		day: Number (0-6),
+		startingHour: Number (0-23),
+		startingMinutes: Number (0-59),
+		endingHour: Number (0-23),
+		endingMinutes: Number (0-59)
+	]}
 }
 */
 
@@ -56,11 +63,31 @@ let timetableSchema = new Schema({
 });
 
 let doctorSchema = new Schema({
-	user: {
-		type: Schema.Types.ObjectId,
-		ref: "User",
+	firstName: {
+		type: String,
+		required: true,
+	},
+	lastName: {
+		type: String,
+		required: true,
+	},
+	birthDate: {
+		type: Date,
+		required: true,
+	},
+	email: {
+		type: String,
 		required: true,
 		unique: true,
+	},
+	phone: {
+		type: String,
+		required: true,
+		unique: true,
+	},
+	password: {
+		type: String,
+		required: true,
 	},
 	patients: [
 		{
@@ -81,7 +108,7 @@ let doctorSchema = new Schema({
 	info: {
 		address: {
 			type: String,
-			required: true,
+			required: false,
 		},
 		phone: {
 			type: String,
@@ -100,5 +127,21 @@ let doctorSchema = new Schema({
 	},
 	timetable: [timetableSchema],
 });
+
+// hash password before saving to database
+doctorSchema.pre("save", async function (next) {
+	const doctor = this;
+	if (doctor.isModified("password")) {
+		doctor.password = await bcrypt.hash(doctor.password, 8);
+	}
+	next();
+});
+
+// toJSON
+doctorSchema.methods.toJSON = function () {
+	let doctor = this.toObject();
+	delete doctor.password;
+	return doctor;
+};
 
 module.exports = mongoose.model("Doctor", doctorSchema);

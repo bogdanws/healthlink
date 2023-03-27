@@ -31,3 +31,5 @@ let appointmentSchema = new Schema({
 		default: null,
 	},
 });
+
+module.exports = mongoose.model("Appointment", appointmentSchema);

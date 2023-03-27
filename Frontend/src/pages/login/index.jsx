@@ -1,18 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Login.module.scss";
 import { TextField, useMediaQuery } from "@mui/material";
+import axios from "axios";
+import { useState } from "react";
 
 function Login() {
 	const desktop = useMediaQuery("(min-width:768px)");
+	const navigate = useNavigate();
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
-	const inputSx = {
-		backgroundColor: "#F6F8FD",
-		my: "0.4rem",
-		borderRadius: "0.3rem",
-		"& .MuiInputLabel-root": {
-			color: "primary.dark"
-		}
-	};
+	function submitHandler(e) {
+		e.preventDefault();
+
+		axios
+			.post("/api/login", { email, password }, { withCredentials: true })
+			.then((res) => {
+				if (res.status === 200) {
+					navigate("/dashboard");
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
 
 	return (
 		<>
@@ -44,7 +55,7 @@ function Login() {
 					<div className={styles.header}>
 						<img src="signin.svg" className={styles.headerPhoto} />
 					</div>
-					<form className={styles.form}>
+					<form className={styles.form} onSubmit={submitHandler}>
 						{desktop && (
 							<div className={styles.loginTitle}>
 								<img className={styles.logoImg} src="logo.svg" alt="" />
@@ -55,13 +66,22 @@ function Login() {
 							label="E-mail"
 							variant="outlined"
 							sx={inputSx}
-							type="email"
+							name="email"
+							value={email}
+							onChange={(e) => {
+								setEmail(e.target.value);
+							}}
 						/>
 						<TextField
 							label="Password"
 							variant="outlined"
 							sx={inputSx}
 							type="password"
+							name="password"
+							value={password}
+							onChange={(e) => {
+								setPassword(e.target.value);
+							}}
 						/>
 						<button>Sign in</button>
 					</form>
@@ -71,5 +91,14 @@ function Login() {
 		</>
 	);
 }
+
+const inputSx = {
+	backgroundColor: "#F6F8FD",
+	my: "0.4rem",
+	borderRadius: "0.3rem",
+	"& .MuiInputLabel-root": {
+		color: "primary.dark"
+	}
+};
 
 export default Login;
