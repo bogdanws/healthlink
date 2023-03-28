@@ -1,23 +1,65 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-	signup: {}
+const initialProfileState = {
+	firstName: "",
+	lastName: "",
+	email: "",
+	phone: "",
+	accountType: "",
+	birthDate: "",
+	schedule: {
+		monday: {
+			start: null,
+			end: null
+		},
+		tuesday: {
+			start: null,
+			end: null
+		},
+		wednesday: {
+			start: null,
+			end: null
+		},
+		thursday: {
+			start: null,
+			end: null
+		},
+		friday: {
+			start: null,
+			end: null
+		}
+	},
+	clinicAddress: "",
+	uploadedLicense: true
 };
 
-const signupSlice = createSlice({
-	name: "signup",
-	initialState,
+const profileSlice = createSlice({
+	name: "profile",
+	initialState: initialProfileState,
 	reducers: {
-		set: (state, action) => {
-			state.signup[action.payload.name] = action.payload.value;
+		setProfile(state, action) {
+			state.firstName = action.payload.firstName;
+			state.lastName = action.payload.lastName;
+			state.email = action.payload.email;
+			state.phone = action.payload.phone;
+			state.birthDate = action.payload.birthDate;
+			state.schedule = action.payload.schedule || initialProfileState.schedule;
+			state.clinicAddress =
+				action.payload.clinicAddress || initialProfileState.clinicAddress;
+		},
+		setAccountType(state, action) {
+			state.accountType = action.payload;
+		},
+		setUploadedLicense(state, action) {
+			state.uploadedLicense = action.payload;
 		}
 	}
 });
 
 export const store = configureStore({
 	reducer: {
-		signup: signupSlice.reducer
+		profile: profileSlice.reducer
 	}
 });
 
-export const signupActions = signupSlice.actions;
+export const profileActions = profileSlice.actions;

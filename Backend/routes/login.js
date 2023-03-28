@@ -79,10 +79,38 @@ router.post("/", (req, res) => {
 router.get("/", (req, res) => {
 	// check if patient is logged in
 	if (req.session.patient) {
-		res.status(200).send({ ...req.session.patient, accountType: "patient" });
+		// get patient from database
+		Patient.findById(req.session.patient._id)
+			.then((patient) => {
+				// if patient is found, send patient data
+				if (patient) {
+					res.status(200).send({ ...patient, accountType: "patient" });
+				}
+			})
+			.catch((err) => {
+				res.status(500).send("Internal server error");
+			});
 	} else if (req.session.doctor) {
 		// check if doctor is logged in
-		res.status(200).send({ ...req.session.doctor, accountType: "doctor" });
+		// get doctor from database
+		Doctor.findById(req.session.doctor._id)
+			.then((doctor) => {
+				// if doctor is found, send doctor data
+				if (doctor) {
+					// check if doctor has uploaded license
+					if (doctor.info.license) {
+						doctor.info.license = true;
+					} else {
+						doctor.info.license = false;
+					}
+
+					console.log(doctor);
+					res.status(200).send({ doctor, accountType: "doctor" });
+				}
+			})
+			.catch((err) => {
+				res.status(500).send("Internal server error");
+			});
 	} else {
 		// if user is not logged in, send error
 		res.status(401).send("not logged in");

@@ -15,6 +15,7 @@ import Welcome from "./pages/Welcome";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Dashboard from "./pages/dashboard";
+import Profile from "./pages/dashboard/Profile";
 
 const routeDefinitions = createRoutesFromElements(
 	<>
@@ -24,7 +25,14 @@ const routeDefinitions = createRoutesFromElements(
 			<Route path="signup" element={<Signup />} />
 		</Route>
 		<Route path="/dashboard" element={<Dashboard />}>
-			<Route path="" />
+			<Route path="patients" />
+			<Route path="appointments" />
+			<Route path="consultations" />
+			<Route path="profile" element={<Profile />} />
+			<Route path="medical-records" />
+			<Route path="doctors" />
+			<Route path="" element={<Profile />} />
+			<Route path="*" element={<h1>404</h1>} />
 		</Route>
 	</>
 );

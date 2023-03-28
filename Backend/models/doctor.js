@@ -17,7 +17,7 @@ Doctor: {
 		phone: String,
 		picture: String,
 		description: String,
-		// TODO: Medical license
+		license: String,
 	},
 	timetable: {[
 		day: Number (0-6),
@@ -120,6 +120,11 @@ let doctorSchema = new Schema({
 			default: null,
 		},
 		description: {
+			type: String,
+			required: false,
+			default: null,
+		},
+		license: {
 			type: String,
 			required: false,
 			default: null,
