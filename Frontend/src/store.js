@@ -7,7 +7,7 @@ const initialProfileState = {
 	phone: "",
 	accountType: "",
 	birthDate: "",
-	schedule: {
+	timetable: {
 		monday: {
 			start: null,
 			end: null
@@ -43,9 +43,10 @@ const profileSlice = createSlice({
 			state.email = action.payload.email;
 			state.phone = action.payload.phone;
 			state.birthDate = action.payload.birthDate;
-			state.schedule = action.payload.schedule || initialProfileState.schedule;
+			state.timetable =
+				action.payload.timetable || initialProfileState.timetable;
 			state.clinicAddress =
-				action.payload.clinicAddress || initialProfileState.clinicAddress;
+				action.payload.address || initialProfileState.clinicAddress;
 		},
 		setAccountType(state, action) {
 			state.accountType = action.payload;

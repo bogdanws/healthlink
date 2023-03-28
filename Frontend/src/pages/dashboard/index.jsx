@@ -1,32 +1,33 @@
-import axios from "axios";
-import { Link, useNavigate, Outlet, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import MenuIcon from "@mui/icons-material/Menu";
+import PeopleIcon from "@mui/icons-material/People";
+import PersonIcon from "@mui/icons-material/Person";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import {
-	Drawer,
-	Box,
-	useMediaQuery,
 	AppBar,
-	Toolbar,
-	Typography,
+	Box,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	Drawer,
+	IconButton,
 	List,
 	ListItem,
 	ListItemButton,
 	ListItemIcon,
 	ListItemText,
-	IconButton,
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	DialogContentText,
-	Button,
-	DialogActions
+	Toolbar,
+	Typography,
+	useMediaQuery
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import PeopleIcon from "@mui/icons-material/People";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import PersonIcon from "@mui/icons-material/Person";
-import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
-import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { profileActions } from "../../store";
 
 const drawerWidth = "20vw";
@@ -92,14 +93,18 @@ export default function Dashboard() {
 			.get("/api/login", { withCredentials: true })
 			.then((res) => {
 				if (res.status === 200) {
-					console.log(res.data);
+					// console.log(res.data);
 					dispatch(profileActions.setAccountType(res.data.accountType));
-					dispatch(profileActions.setProfile(res.data.doctor));
-					dispatch(
-						profileActions.setUploadedLicense(
-							res.data.doctor.info.license === "true"
-						)
-					);
+					if (res.data.accountType === "doctor") {
+						dispatch(profileActions.setProfile(res.data.doctor));
+						dispatch(
+							profileActions.setUploadedLicense(
+								res.data.doctor.info.license === "true"
+							)
+						);
+					} else {
+						dispatch(profileActions.setProfile(res.data.patient));
+					}
 				}
 			})
 			.catch((err) => {
@@ -207,6 +212,7 @@ export default function Dashboard() {
 }
 
 function DrawerContent(props) {
+	const navigate = useNavigate();
 	let routes = [];
 	if (props.accountType === "doctor") {
 		routes = doctorRoutes;
@@ -234,6 +240,44 @@ function DrawerContent(props) {
 						</ListItem>
 					</Link>
 				))}
+				{/* logout */}
+				<ListItem disablePadding>
+					<ListItemButton
+						onClick={() => {
+							axios
+								.get("/api/logout", { withCredentials: true })
+								.then((res) => {
+									if (res.status === 200) {
+										navigate("/");
+									}
+								})
+								.catch((err) => {
+									console.log(err);
+								});
+						}}
+					>
+						<ListItemIcon>
+							<ExitToAppIcon
+								sx={{
+									color: "secondary.main"
+								}}
+							/>
+						</ListItemIcon>
+						<ListItemText
+							primary={
+								<Typography
+									variant="body1"
+									noWrap
+									sx={{
+										color: "secondary.main"
+									}}
+								>
+									Logout
+								</Typography>
+							}
+						/>
+					</ListItemButton>
+				</ListItem>
 			</List>
 		</>
 	);

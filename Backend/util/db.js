@@ -6,9 +6,11 @@ const doctor = require("../models/doctor");
 const appointment = require("../models/appointment");
 const document = require("../models/document");
 
+const url = "mongodb://127.0.0.1:27017/healthlink";
+
 function connect() {
 	mongoose.set("strictQuery", false);
-	mongoose.connect("mongodb://127.0.0.1:27017/healthlink", (err) => {
+	mongoose.connect(url, (err) => {
 		if (err) {
 			console.log("Error connecting to MongoDB");
 		} else {
@@ -19,6 +21,7 @@ function connect() {
 
 module.exports = {
 	connect,
+	url,
 	patient,
 	invite,
 	doctor,

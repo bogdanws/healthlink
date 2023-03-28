@@ -71,11 +71,12 @@ function Signup() {
 					birthDate: profileData.birthDate,
 					email: profileData.email,
 					phone: profileData.phone,
-					password
+					password,
+					inviteCode
 				})
 				.then((res) => {
 					if (res.status === 200) {
-						navigate("/dashboard");
+						navigate("/login");
 					}
 				})
 				.catch((err) => {
@@ -93,7 +94,7 @@ function Signup() {
 				})
 				.then((res) => {
 					if (res.status === 200) {
-						navigate("/dashboard");
+						navigate("/login");
 					}
 				})
 				.catch((err) => {
@@ -111,6 +112,7 @@ function Signup() {
 		phone: ""
 	});
 	const [password, setPassword] = useState("");
+	const [inviteCode, setInviteCode] = useState("");
 
 	// #region Form content
 	let formContent;
@@ -120,7 +122,12 @@ function Signup() {
 			break;
 		case 2:
 			if (accountType === 1) {
-				formContent = <InfoPagePacient setProfileData={setProfileData} />;
+				formContent = (
+					<InfoPagePacient
+						setProfileData={setProfileData}
+						setInviteCode={setInviteCode}
+					/>
+				);
 			} else {
 				formContent = <InfoPage setProfileData={setProfileData} />;
 			}

@@ -84,7 +84,7 @@ router.get("/", (req, res) => {
 			.then((patient) => {
 				// if patient is found, send patient data
 				if (patient) {
-					res.status(200).send({ ...patient, accountType: "patient" });
+					res.status(200).send({ patient, accountType: "patient" });
 				}
 			})
 			.catch((err) => {
@@ -104,7 +104,6 @@ router.get("/", (req, res) => {
 						doctor.info.license = false;
 					}
 
-					console.log(doctor);
 					res.status(200).send({ doctor, accountType: "doctor" });
 				}
 			})

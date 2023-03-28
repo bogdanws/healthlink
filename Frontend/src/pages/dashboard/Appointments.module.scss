@@ -1,0 +1,11 @@
+@import "../../globals.scss";
+
+.appointments {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 2rem;
+
+	@media (max-width: $breakpoint) {
+		grid-template-columns: 1fr;
+	}
+}

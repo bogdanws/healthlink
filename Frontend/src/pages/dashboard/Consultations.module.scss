@@ -1,0 +1,11 @@
+@import "../../globals.scss";
+
+.consultations {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 1rem;
+
+	@media (max-width: $breakpoint) {
+		grid-template-columns: 1fr;
+	}
+}

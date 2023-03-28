@@ -14,8 +14,10 @@ export default function InfoPagePacient(props) {
 				axios
 					.get(`/api/signup/checkCode?q=${inviteCode}`)
 					.then((res) => {
-						if (res.data === "valid") setValidInviteCode(true);
-						else setValidInviteCode(false);
+						if (res.data === "valid") {
+							setValidInviteCode(true);
+							props.setInviteCode(inviteCode);
+						} else setValidInviteCode(false);
 					})
 					.catch((err) => {
 						console.log(err);

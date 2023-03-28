@@ -13,7 +13,6 @@ Patient: {
 	doctor: Doctor,
 	inviteCode: String,
 	documents: [Document],
-	appointments: [Appointment],
 */
 
 let patientSchema = new Schema({
@@ -57,14 +56,6 @@ let patientSchema = new Schema({
 		{
 			type: Schema.Types.ObjectId,
 			ref: "Document",
-			required: false,
-			default: [],
-		},
-	],
-	appointments: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: "Appointment",
 			required: false,
 			default: [],
 		},

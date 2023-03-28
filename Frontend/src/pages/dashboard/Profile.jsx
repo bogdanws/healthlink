@@ -1,11 +1,20 @@
-import styles from "./Profile.module.scss";
-import { useSelector, useDispatch } from "react-redux";
-import { profileActions } from "../../store";
-import { Button, TextField } from "@mui/material";
+import {
+	Button,
+	Alert,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	TextField
+} from "@mui/material";
 import { MobileDatePicker, MobileTimePicker } from "@mui/x-date-pickers";
-import { useState, useEffect } from "react";
-import dayjs from "dayjs";
 import axios from "axios";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { profileActions } from "../../store";
+import styles from "./Profile.module.scss";
 
 export default function Profile(props) {
 	const profile = useSelector((state) => state.profile);
@@ -17,7 +26,7 @@ export default function Profile(props) {
 	const [birthDate, setBirthDate] = useState(dayjs());
 	const [email, setEmail] = useState("");
 	const [phone, setPhone] = useState("");
-	const [schedule, setSchedule] = useState({
+	const [timetable, setTimetable] = useState({
 		monday: {
 			start: null,
 			end: null
@@ -46,9 +55,14 @@ export default function Profile(props) {
 		setBirthDate(dayjs(profile.birthDate));
 		setEmail(profile.email);
 		setPhone(profile.phone);
-		setSchedule(profile.schedule);
+		setTimetable(profile.timetable);
 		setClinicAddress(profile.clinicAddress);
 	}, [profile]);
+
+	const [showAIPrompt, setShowAIPrompt] = useState(false);
+	const [symptoms, setSymptoms] = useState("");
+	const [aiResponse, setAiResponse] = useState(null);
+	const [sentAiRequest, setSentAiRequest] = useState(false);
 
 	return (
 		<div className={styles.profile}>
@@ -57,15 +71,21 @@ export default function Profile(props) {
 				<Button
 					variant="contained"
 					onClick={() => {
+						let path;
+						if (profile.accountType === "doctor") {
+							path = "/api/doctor/profile";
+						} else if (profile.accountType === "patient") {
+							path = "/api/patient/profile";
+						}
 						axios
-							.post("/api/profile", {
+							.post(path, {
 								firstName,
 								lastName,
 								birthDate: birthDate.format("YYYY-MM-DD"),
 								email,
 								phone,
-								schedule,
-								clinicAddress
+								timetable,
+								address: clinicAddress
 							})
 							.then((res) => {
 								dispatch(profileActions.setProfile(res.data));
@@ -139,9 +159,9 @@ export default function Profile(props) {
 										<h4>{day.charAt(0).toUpperCase() + day.slice(1)}</h4>
 										<MobileTimePicker
 											label="Start"
-											value={schedule[day].start}
+											value={timetable[day].start}
 											onChange={(newValue) => {
-												setSchedule((prev) => ({
+												setTimetable((prev) => ({
 													...prev,
 													[day]: { ...prev[day], start: newValue }
 												}));
@@ -150,9 +170,9 @@ export default function Profile(props) {
 										/>
 										<MobileTimePicker
 											label="End"
-											value={schedule[day].end}
+											value={timetable[day].end}
 											onChange={(newValue) => {
-												setSchedule((prev) => ({
+												setTimetable((prev) => ({
 													...prev,
 													[day]: { ...prev[day], end: newValue }
 												}));
@@ -163,7 +183,7 @@ export default function Profile(props) {
 											variant="outlined"
 											sx={{ mt: "0.3rem" }}
 											onClick={() => {
-												setSchedule((prev) => ({
+												setTimetable((prev) => ({
 													...prev,
 													[day]: { start: null, end: null }
 												}));
@@ -182,7 +202,6 @@ export default function Profile(props) {
 							<TextField
 								label="Address"
 								variant="outlined"
-								sx={inputSx}
 								value={clinicAddress}
 								onChange={(e) => {
 									setClinicAddress(e.target.value);
@@ -229,6 +248,93 @@ export default function Profile(props) {
 						</div>
 					</div>
 				</>
+			)}
+			{profile.accountType === "patient" && (
+				<Button
+					variant="contained"
+					sx={{ mt: "3rem" }}
+					color="secondary"
+					fullWidth
+					onClick={() => {
+						// reset the state of the AI prompt
+						setSymptoms("");
+						setAiResponse("");
+						setSentAiRequest(false);
+						setShowAIPrompt(true);
+					}}
+				>
+					Talk to virtual doctor
+				</Button>
+			)}
+			{showAIPrompt && (
+				<Dialog
+					open={showAIPrompt}
+					onClose={() => {
+						setShowAIPrompt(false);
+					}}
+				>
+					<DialogTitle>Talk to virtual doctor</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							Talk to a virtual doctor about your symptoms.
+						</DialogContentText>
+						<TextField
+							label="Symptoms"
+							variant="outlined"
+							fullWidth
+							sx={{
+								mt: "1rem"
+							}}
+							value={symptoms}
+							onChange={(e) => {
+								setSymptoms(e.target.value);
+							}}
+						/>
+						{aiResponse && (
+							<Alert severity="success" sx={{ mt: "1rem" }}>
+								{aiResponse.content.split("\n").map((item, i) => {
+									return (
+										<span key={i}>
+											{item}
+											<br />
+										</span>
+									);
+								})}
+							</Alert>
+						)}
+					</DialogContent>
+					<DialogActions>
+						<Button
+							onClick={() => {
+								setShowAIPrompt(false);
+							}}
+						>
+							Close
+						</Button>
+						{!sentAiRequest && (
+							<Button
+								onClick={() => {
+									setSentAiRequest(true);
+									// send symptoms to AI
+									axios
+										.post("/api/ai", { question: symptoms })
+										.then((res) => {
+											// if status is 200, then AI was able to give a diagnosis
+											if (res.status === 200) {
+												console.log(res.data);
+												setAiResponse(res.data);
+											}
+										})
+										.catch((err) => {
+											console.log(err);
+										});
+								}}
+							>
+								Submit symptoms
+							</Button>
+						)}
+					</DialogActions>
+				</Dialog>
 			)}
 		</div>
 	);

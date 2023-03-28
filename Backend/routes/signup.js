@@ -20,25 +20,24 @@ example body:
   "inviteCode": "123456"
 }
 */
-router.post("/patient", (req, res) => {
+router.post("/patient", async (req, res) => {
 	// get invite code from request
 	let inviteCode = req.body.inviteCode;
 
 	let doctor;
 
 	// check if invite code is valid
-	Invite.findOne({ inviteCode: inviteCode })
-		.then((invite) => {
-			if (!invite) {
-				res.status(401).send("Invalid invite code");
-				return;
-			}
-			doctor = invite.doctor;
-		})
-		.catch((err) => {
-			res.status(400).send(err);
+	try {
+		let invite = await Invite.findOne({ inviteCode: inviteCode });
+		if (!invite) {
+			res.status(401).send("Invalid invite code");
 			return;
-		});
+		}
+		doctor = invite.doctor;
+	} catch (err) {
+		res.status(500).send(err);
+		return;
+	}
 
 	// create new patient
 	let patient = new Patient({
@@ -52,23 +51,21 @@ router.post("/patient", (req, res) => {
 		inviteCode: inviteCode,
 	});
 
-	patient
-		.save()
-		.then((patient) => {
-			res.send(patient.toJSON());
-		})
-		.catch((err) => {
-			res.status(400).send(err);
-		});
+	try {
+		await patient.save();
+		res.send(patient.toJSON());
+	} catch (err) {
+		res.status(500).send(err);
+	}
 
 	// Add patient to doctor
-	Doctor.findOneAndUpdate(
+	await Doctor.findOneAndUpdate(
 		{ _id: doctor },
 		{ $push: { patients: patient._id } }
 	);
 
 	// Delete invite code
-	Invite.findOneAndDelete({ inviteCode: inviteCode });
+	await Invite.findOneAndDelete({ inviteCode: inviteCode });
 });
 
 // POST /signup/doctor
@@ -101,7 +98,7 @@ router.post("/doctor", (req, res) => {
 			res.send(doctor.toJSON());
 		})
 		.catch((err) => {
-			console.log(err);
+			console.error(err);
 			res.status(400).send(err);
 		});
 });

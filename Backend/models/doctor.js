@@ -11,7 +11,6 @@ Doctor: {
 	phone: String,
 	password: String,
 	patients: [Patient],
-	appointments: [Appointment],
 	info: {
 		address: String,
 		phone: String,
@@ -30,35 +29,65 @@ Doctor: {
 */
 
 let timetableSchema = new Schema({
-	day: {
-		type: Number,
-		required: true,
-		min: 0,
-		max: 6,
+	monday: {
+		start: {
+			type: String,
+			required: false,
+			default: null,
+		},
+		end: {
+			type: String,
+			required: false,
+			default: null,
+		},
 	},
-	startingHour: {
-		type: Number,
-		required: true,
-		min: 0,
-		max: 23,
+	tuesday: {
+		start: {
+			type: String,
+			required: false,
+			default: null,
+		},
+		end: {
+			type: String,
+			required: false,
+			default: null,
+		},
 	},
-	startingMinutes: {
-		type: Number,
-		required: true,
-		min: 0,
-		max: 59,
+	wednesday: {
+		start: {
+			type: String,
+			required: false,
+			default: null,
+		},
+		end: {
+			type: String,
+			required: false,
+			default: null,
+		},
 	},
-	endingHour: {
-		type: Number,
-		required: true,
-		min: 0,
-		max: 23,
+	thursday: {
+		start: {
+			type: String,
+			required: false,
+			default: null,
+		},
+		end: {
+			type: String,
+			required: false,
+			default: null,
+		},
 	},
-	endingMinutes: {
-		type: Number,
-		required: true,
-		min: 0,
-		max: 59,
+	friday: {
+		start: {
+			type: String,
+			required: false,
+			default: null,
+		},
+		end: {
+			type: String,
+			required: false,
+			default: null,
+		},
 	},
 });
 
@@ -89,6 +118,10 @@ let doctorSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	address: {
+		type: String,
+		required: false,
+	},
 	patients: [
 		{
 			type: Schema.Types.ObjectId,
@@ -97,19 +130,7 @@ let doctorSchema = new Schema({
 			default: [],
 		},
 	],
-	appointments: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: "Appointment",
-			required: false,
-			default: [],
-		},
-	],
 	info: {
-		address: {
-			type: String,
-			required: false,
-		},
 		phone: {
 			type: String,
 			required: false,
@@ -129,8 +150,17 @@ let doctorSchema = new Schema({
 			required: false,
 			default: null,
 		},
+		address: {
+			type: String,
+			required: false,
+			default: null,
+		},
 	},
-	timetable: [timetableSchema],
+	timetable: {
+		type: timetableSchema,
+		required: false,
+		default: null,
+	},
 });
 
 // hash password before saving to database
