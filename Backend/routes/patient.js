@@ -34,4 +34,22 @@ router.get("/:id/:documentId", (req, res) => {
 		});
 });
 
+// POST /patient/profile
+// Update patient profile
+router.post("/profile", (req, res) => {
+	// get profile id from session
+	let profileId = req.session.patient;
+
+	// update patient profile
+	Patient.findByIdAndUpdate(profileId, req.body, { new: true })
+		.then((patient) => {
+			res.status(200).send(patient);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: err.message || "Error updating patient profile",
+			});
+		});
+});
+
 module.exports = router;
